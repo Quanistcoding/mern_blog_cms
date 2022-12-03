@@ -9,13 +9,12 @@ import cofigCheck from "./startup/config";
 import logger from "./startup/logger";
 
 const debug = Debug("app:start");
+process.on("uncaughtException",ex=>{
+    debug(ex.message || ex);
+    logger.error(ex.message || ex);
+})
+
 cofigCheck();
-
-
-logger.info("asd");
-
-
-
 
 const app = express();
 
