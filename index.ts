@@ -46,10 +46,10 @@ const start = async () => {
     const con = mysql.createConnection({
         host:"localhost",
         user:"root",
-        password:"password",
+        password:config.get("db_password"),
         database:"node_blog_cms"
     })
-    
+
     await con.connect();
     debug("Database connected...");
     await Categories.injectDb(con);
