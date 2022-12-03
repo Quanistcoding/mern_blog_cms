@@ -5,6 +5,7 @@ export default interface User {
     lastname:string,
     role?:string,
     email:string,
+    image?:string,
     password?:string,
     confirmedPassword?:string
 }

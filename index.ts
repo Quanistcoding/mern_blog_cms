@@ -5,11 +5,14 @@ import Debug from "debug";
 import morgan from "morgan";
 import mysql from "mysql";
 import Categories from "./models/categories";
+import cofigCheck from "./startup/config";
+import logger from "./startup/logger";
+
 const debug = Debug("app:start");
+cofigCheck();
 
 
-
-
+logger.info("asd");
 
 
 
