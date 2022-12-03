@@ -1,6 +1,6 @@
 import mysql from "mysql";
 import Debug from "debug";
-import IUser from "../interfaces/user";
+import IUser from "../dtos/user";
 import Db from "./db";
 
 const debug = Debug("models:user");

@@ -1,6 +1,6 @@
 import mysql from "mysql";
 import Debug from "debug";
-import ICategory from "../interfaces/category";
+import ICategory from "../dtos/category";
 import Db from "./db";
 
 const debug = Debug("models:categories");

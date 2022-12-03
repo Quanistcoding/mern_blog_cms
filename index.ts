@@ -7,6 +7,8 @@ import mysql from "mysql";
 import Categories from "./models/categories";
 import cofigCheck from "./startup/config";
 import logger from "./startup/logger";
+import pageNotFound from "./middleware/pageNotFound";
+import errorHandler from "./middleware/errorHandler";
 
 const debug = Debug("app:start");
 process.on("uncaughtException",ex=>{
@@ -43,6 +45,9 @@ app.get("/api/users",(req,res)=>{
 
 app.use("/api/categories",categories);
 
+
+app.use(pageNotFound);
+app.use(errorHandler);
 
 const start = async () => {
     const con = mysql.createConnection({
