@@ -4,11 +4,13 @@ import config from "config";
 import Debug from "debug";
 import morgan from "morgan";
 import mysql from "mysql";
-import Categories from "./models/categories";
 import cofigCheck from "./startup/config";
 import logger from "./startup/logger";
 import pageNotFound from "./middleware/pageNotFound";
 import errorHandler from "./middleware/errorHandler";
+import Category from "./models/category";
+import users from "./routes/users";
+import User from "./models/user";
 
 const debug = Debug("app:start");
 process.on("uncaughtException",ex=>{
@@ -28,23 +30,8 @@ if(app.get("env") !== "production"){
 
 app.use(express.json())
 
-app.get("/",(req,res)=>{
-    res.send("asd")
-})
-
-interface User {
-    username:string,
-    age:number
-}
-
-
-app.get("/api/users",(req,res)=>{
-
-    res.send("asd")
-})
-
 app.use("/api/categories",categories);
-
+app.use("/api/users",users);
 
 app.use(pageNotFound);
 app.use(errorHandler);
@@ -59,7 +46,8 @@ const start = async () => {
 
     await con.connect();
     debug("Database connected...");
-    await Categories.injectDb(con);
+    await Category.injectDb(con);
+    await User.injectDb(con);
     const port = config.get("port") || 4000;
     app.listen(port,()=>{debug("Server listening on port " + port)});
 }

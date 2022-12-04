@@ -1,3 +1,5 @@
-export default (req:any,res:any,next:any) => {
+
+import {Request,Response,NextFunction} from "express";
+export default (req:Request,res:Response,next:NextFunction) => {
     res.status(404).send("Page not found...");
 };

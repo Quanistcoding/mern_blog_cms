@@ -1,4 +1,4 @@
-export default interface User {
+export default interface IUser {
     id?:number,
     username:string,
     firstname:string,
@@ -6,6 +6,7 @@ export default interface User {
     role?:string,
     email:string,
     image?:string,
+    oldPassword?:string,
     password?:string,
     confirmedPassword?:string
 }
