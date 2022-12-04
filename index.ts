@@ -44,7 +44,7 @@ const start = async () => {
         host:"localhost",
         user:"root",
         password:config.get("db_password"),
-        database:"node_blog_cms"
+        database:config.get("db_name")
     })
 
     await con.connect();
