@@ -8,7 +8,7 @@ require("express-async-errors");
 const debug = Debug("routes:categories");
 const router = Router();
 
-router.get("/",async (req,res,next)=>{
+router.get("/",async (req,res)=>{
         const result = await Category.find();
         res.json(result);
 })

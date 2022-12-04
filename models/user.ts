@@ -19,16 +19,16 @@ export default class User extends Db{
         return res;
     }
     
-    public static async insertOne(user:IUser){
-        const {username,firstname,lastname,password,email} = user;
+    public static async insertOne(input:IUser){
+        const {username,firstname,lastname,password,email} = input;
         let sql = `INSERT INTO users (username,firstname,lastname,password,email) VALUES `;
             sql += `("${username}","${firstname}","${lastname}","${password}","${email}")`;
         const res = await this.con(sql);
         return res;
     }   
 
-    public static async updateById(id:number,user:IUser){
-        const {username,firstname,lastname,email} = user;
+    public static async updateById(id:number,input:IUser){
+        const {username,firstname,lastname,email} = input;
         let sql = `UPDATE users SET username = "${username}", `;
         sql += `firstname = "${firstname}",lastname = "${lastname}",email = "${email}" `;
         sql += `WHERE id = ${id}`;
@@ -42,7 +42,7 @@ export default class User extends Db{
         return res;
     } 
 
-    public static validateInsert(user:IUser){
+    public static validateInsert(input:IUser){
         const schema = Joi.object({
             username:Joi.string().required(),
             password:Joi.string().required().min(3).max(1024),
@@ -55,18 +55,18 @@ export default class User extends Db{
              .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         })
 
-        return schema.validate(user);
+        return schema.validate(input);
     }
 
-    public static validateUpdate(user:IUser){
+    public static validateUpdate(input:IUser){
         const schema = Joi.object({
             username:Joi.string(),
             firstname:Joi.string(),
             lastname:Joi.string(),
             email:Joi.string()
-             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
         })
 
-        return schema.validate(user);
+        return schema.validate(input);
     }
 }

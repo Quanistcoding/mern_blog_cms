@@ -3,7 +3,7 @@ export default interface IUser {
     username:string,
     firstname:string,
     lastname:string,
-    role?:string,
+    role?:"administrator" | "subsctiber" | "reader",
     email:string,
     image?:string,
     oldPassword?:string,

@@ -11,6 +11,8 @@ import errorHandler from "./middleware/errorHandler";
 import Category from "./models/category";
 import users from "./routes/users";
 import User from "./models/user";
+import posts from "./routes/posts";
+import Post from "./models/post";
 
 const debug = Debug("app:start");
 process.on("uncaughtException",ex=>{
@@ -32,6 +34,7 @@ app.use(express.json())
 
 app.use("/api/categories",categories);
 app.use("/api/users",users);
+app.use("/api/posts",posts);
 
 app.use(pageNotFound);
 app.use(errorHandler);
@@ -46,8 +49,11 @@ const start = async () => {
 
     await con.connect();
     debug("Database connected...");
+    
     await Category.injectDb(con);
     await User.injectDb(con);
+    await Post.injectDb(con);
+
     const port = config.get("port") || 4000;
     app.listen(port,()=>{debug("Server listening on port " + port)});
 }

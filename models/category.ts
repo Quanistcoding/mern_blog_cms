@@ -20,15 +20,15 @@ export default class Category extends Db{
         return res;
     }
 
-    public static async insertOne(category:ICategory){
-        const {name} = category;
+    public static async insertOne(input:ICategory){
+        const {name} = input;
         const sql = `INSERT INTO categories (name) VALUES ("${name}")`;
         const res = await this.con(sql);
         return res;
     }   
 
-    public static async updateById(id:number,category:ICategory){
-        const {name} = category;
+    public static async updateById(id:number,input:ICategory){
+        const {name} = input;
         const sql = `UPDATE categories SET name = "${name}" WHERE id = ${id}`;
         const res = await this.con(sql);
         return res;
@@ -40,11 +40,11 @@ export default class Category extends Db{
         return res;
     } 
 
-    public static validate(category:ICategory){
+    public static validate(input:ICategory){
         const schema = Joi.object({
             name:Joi.string().required()
         })
 
-        return schema.validate(category);
+        return schema.validate(input);
     }
 }
