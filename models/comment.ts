@@ -1,5 +1,5 @@
 import Debug from "debug";
-// import IComment from "../dtos/comment";
+import IComment from "../dtos/comment";
 import Db from "./db";
 import Joi from "joi";
 
@@ -19,13 +19,13 @@ export default class Comment extends Db{
         return res;
     }
     
-    // public static async insertOne(input:IUser){
-    //     const {username,firstname,lastname,password,email} = input;
-    //     let sql = `INSERT INTO users (username,firstname,lastname,password,email) VALUES `;
-    //         sql += `("${username}","${firstname}","${lastname}","${password}","${email}")`;
-    //     const res = await this.con(sql);
-    //     return res;
-    // }   
+    public static async insertOne(input:IComment){
+        const {postId,author,email,content} = input;
+        let sql = `INSERT INTO users (postId,author,eamil,content) VALUES `;
+            sql += `("${postId}","${author}","${email}","${content}")`;
+        const res = await this.con(sql);
+        return res;
+    }   
 
     // public static async updateById(id:number,input:IUser){
     //     const {username,firstname,lastname,email} = input;
@@ -42,31 +42,14 @@ export default class Comment extends Db{
     //     return res;
     // } 
 
-    // public static validateInsert(input:IUser){
-    //     const schema = Joi.object({
-    //         username:Joi.string().required(),
-    //         password:Joi.string().required().min(3).max(1024),
-    //         confirmedPassword:Joi.valid(Joi.ref('password')).required().messages({
-    //             "any.only":"confirmedPassword does not match password"
-    //         }),
-    //         firstname:Joi.string().required(),
-    //         lastname:Joi.string().required(),
-    //         email:Joi.string().required()
-    //          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    //     })
-
-    //     return schema.validate(input);
-    // }
-
-    // public static validateUpdate(input:IUser){
-    //     const schema = Joi.object({
-    //         username:Joi.string(),
-    //         firstname:Joi.string(),
-    //         lastname:Joi.string(),
-    //         email:Joi.string()
-    //          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-    //     })
-
-    //     return schema.validate(input);
-    // }
+    public static validate(input:IComment){
+        const schema = Joi.object({
+            postId:Joi.number().required(),
+            author:Joi.string(),
+            content:Joi.string().required(),
+            email:Joi.string().required()
+             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        })
+        return schema.validate(input);
+    }
 }

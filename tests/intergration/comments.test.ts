@@ -1,16 +1,22 @@
 
 const request = require("supertest");
 import createTableCommentsSql from "../../dbScript/createTalbeCommentsSql"
-import express from "express";
-
 
 describe("GET /api/comments",()=>{
     let server:any,con:any;
+    let comment:any;
 
     beforeEach(async ()=>{
         const serverObj = await require('../../index');
         server = serverObj.server;
         con = serverObj.con;
+        
+        comment = {
+            postId:1,
+            email:"aaa@bbb.com",
+            content:"new comment",
+            author:"new author"
+        }
 
         const dropTableSql = "DROP table comments";
         await con.query(dropTableSql);
@@ -29,7 +35,7 @@ describe("GET /api/comments",()=>{
         await con.end();
     });
 
-    describe("GET /api/commejnts",()=>{
+    describe("GET /api/comments",()=>{
         it("should return status code 200",async ()=>{
             const res = await request(server).get("/api/comments");
             expect(res.status).toBe(200);
@@ -41,7 +47,7 @@ describe("GET /api/comments",()=>{
         })
     });
 
-    describe("GET /api/commejnts/:id",()=>{
+    describe("GET /api/comments/:id",()=>{
         it("should return 1 comment",async ()=>{
             const res = await request(server).get("/api/comments/1");
             expect(res.body[0]).toMatchObject({
@@ -63,17 +69,34 @@ describe("GET /api/comments",()=>{
         })
     });
 
-    // describe("POSTT /api/commejnts",()=>{
-    //     it("should return status 400 when",async ()=>{
-    //         const res = await request(server).get("/api/comments/1");
-    //         expect(res.body[0]).toMatchObject({
-    //             postId:1,
-    //             author:"author1",
-    //             email:"email1",
-    //             content:"content1"
-    //         });
-    //     })
-    // });
+    describe("POST /api/comments",()=>{
+        it("should return status 400 when an empty object is paased",async ()=>{
+            const res = await request(server).post("/api/comments")
+            .send({});
+            expect(res.status).toBe(400);
+        })
+
+        it("should return status 400 when postId is not paased",async ()=>{
+            comment.postId = null;
+            const res = await request(server).post("/api/comments")
+            .send(comment);
+            expect(res.status).toBe(400);
+        })
+
+        it("should return status 400 when email is not paased",async ()=>{
+            comment.email = null;
+            const res = await request(server).post("/api/comments")
+            .send(comment);
+            expect(res.status).toBe(400);
+        })
+        
+        it("should return status 400 when contnet is not paased",async ()=>{
+            comment.contnet = null;
+            const res = await request(server).post("/api/comments")
+            .send(comment);
+            expect(res.status).toBe(400);
+        })
+    });
 
 
 })
