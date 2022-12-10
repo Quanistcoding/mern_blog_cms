@@ -111,5 +111,27 @@ describe("GET /api/comments",()=>{
         })
     });
 
+    describe("PUT /api/comments",()=>{
+        it("should return status code 400 when id is NaN",async ()=>{
+            const res = await request(server).put("/api/comments/a");
+            expect(res.status).toBe(400);
+        })
 
+        it("should return affectedRows of 0 when row of given id is not found",async ()=>{
+            const res = await request(server).put("/api/comments/0.5")
+            .send(comment);
+            expect(res.body.affectedRows).toBe(0);
+        })
+
+        it("should return an updated user when done",async ()=>{
+            let updatedString = "updated user";
+            comment.author = updatedString;
+            await request(server).put("/api/comments/1")
+            .send(comment);
+
+            const res = await request(server).get("/api/comments/1");
+
+            expect(res.body[0]).toHaveProperty("author",updatedString)
+        })
+    })
 })

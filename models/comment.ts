@@ -27,14 +27,14 @@ export default class Comment extends Db{
         return res;
     }   
 
-    // public static async updateById(id:number,input:IUser){
-    //     const {username,firstname,lastname,email} = input;
-    //     let sql = `UPDATE users SET username = "${username}", `;
-    //     sql += `firstname = "${firstname}",lastname = "${lastname}",email = "${email}" `;
-    //     sql += `WHERE id = ${id}`;
-    //     const res = await this.con(sql);
-    //     return res;
-    // } 
+    public static async updateById(id:number,input:IComment){
+        const {postId,author,email,content} = input;
+        let sql = `UPDATE comments SET postId = "${postId}", `;
+        sql += `author = "${author}",email = "${email}",content = "${content}" `;
+        sql += `WHERE id = ${id}`;
+        const res = await this.con(sql);
+        return res;
+    } 
 
     // public static async deleteById(id:number){
     //     const sql = `DELETE FROM users WHERE id = ${id}`;
