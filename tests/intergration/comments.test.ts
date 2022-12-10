@@ -2,7 +2,7 @@
 const request = require("supertest");
 import createTableCommentsSql from "../../dbScript/createTalbeCommentsSql"
 
-describe("GET /api/comments",()=>{
+describe("/api/comments",()=>{
     let server:any,con:any;
     let comment:any;
 
@@ -35,7 +35,7 @@ describe("GET /api/comments",()=>{
         await con.end();
     });
 
-    describe("GET /api/comments",()=>{
+    describe("GET /",()=>{
         it("should return status code 200",async ()=>{
             const res = await request(server).get("/api/comments");
             expect(res.status).toBe(200);
@@ -47,7 +47,7 @@ describe("GET /api/comments",()=>{
         })
     });
 
-    describe("GET /api/comments/:id",()=>{
+    describe("GET /:id",()=>{
         it("should return 1 comment",async ()=>{
             const res = await request(server).get("/api/comments/1");
             expect(res.body[0]).toMatchObject({
@@ -69,7 +69,7 @@ describe("GET /api/comments",()=>{
         })
     });
 
-    describe("POST /api/comments",()=>{
+    describe("POST /",()=>{
         it("should return status 400 when an empty object is paased",async ()=>{
             const res = await request(server).post("/api/comments")
             .send({});
@@ -111,7 +111,7 @@ describe("GET /api/comments",()=>{
         })
     });
 
-    describe("PUT /api/comments",()=>{
+    describe("PUT /:id",()=>{
         it("should return status code 400 when id is NaN",async ()=>{
             const res = await request(server).put("/api/comments/a");
             expect(res.status).toBe(400);
@@ -135,7 +135,7 @@ describe("GET /api/comments",()=>{
         })
     })
 
-    describe("DELETE /api/comments/:id",()=>{
+    describe("DELETE /:id",()=>{
         it("should return status code 400 when id is NaN",async ()=>{
             const res = await request(server).delete("/api/comments/a");
             expect(res.status).toBe(400);

@@ -39,7 +39,9 @@ app.use("/api/users",users);
 app.use("/api/posts",posts);
 app.use("/api/comments",comments)
 
-
+app.use("/api/auth",(req,res)=>{
+    res.status(400).json({a:1});
+})
 
 
 app.use(pageNotFound);
