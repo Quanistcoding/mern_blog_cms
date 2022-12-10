@@ -36,6 +36,13 @@ app.use("/api/categories",categories);
 app.use("/api/users",users);
 app.use("/api/posts",posts);
 
+app.get("/api/comments",(req,res)=>{
+    res.send("");
+})
+
+
+
+
 app.use(pageNotFound);
 app.use(errorHandler);
 
@@ -58,7 +65,7 @@ const start = async () => {
 
     const port = config.get("port") || 4000;
     const server = app.listen(port,()=>{debug("Server listening on port " + port)});
-    return server;
+    return {server,con};
 }
 
 module.exports = start();
