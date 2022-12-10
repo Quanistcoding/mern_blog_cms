@@ -32,4 +32,10 @@ router.put("/:id",idIsNaNCheck,async (req,res)=>{
     res.json(result);
 });
 
+router.delete("/:id",idIsNaNCheck,async(req,res)=>{
+    const id = Number(req.params.id)
+    const result = await Comment.deleteById(id);
+    res.json(result);
+})
+
 export default router;

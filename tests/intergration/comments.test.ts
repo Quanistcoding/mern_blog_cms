@@ -134,4 +134,22 @@ describe("GET /api/comments",()=>{
             expect(res.body[0]).toHaveProperty("author",updatedString)
         })
     })
+
+    describe("DELETE /api/comments/:id",()=>{
+        it("should return status code 400 when id is NaN",async ()=>{
+            const res = await request(server).delete("/api/comments/a");
+            expect(res.status).toBe(400);
+        })
+
+        it("should return affectedRows of 0 when row of given id is not found",async ()=>{
+            const res = await request(server).delete("/api/comments/0.5");
+            expect(res.body.affectedRows).toBe(0);
+        })
+
+        it("should return empty result when deleted",async ()=>{
+            await request(server).delete("/api/comments/1");
+            const res = await request(server).get("/api/comments/1");
+            expect(res.body.length).toBe(0);
+        })
+    })
 })

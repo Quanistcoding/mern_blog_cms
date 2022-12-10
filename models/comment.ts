@@ -28,19 +28,21 @@ export default class Comment extends Db{
     }   
 
     public static async updateById(id:number,input:IComment){
-        const {postId,author,email,content} = input;
+        const {postId,author,email,content,status} = input;
+        const statusSql = status ? `,status = "${status}"`:"";
+
         let sql = `UPDATE comments SET postId = "${postId}", `;
-        sql += `author = "${author}",email = "${email}",content = "${content}" `;
+        sql += `author = "${author}",email = "${email}",content = "${content}"${statusSql}`;
         sql += `WHERE id = ${id}`;
         const res = await this.con(sql);
         return res;
     } 
 
-    // public static async deleteById(id:number){
-    //     const sql = `DELETE FROM users WHERE id = ${id}`;
-    //     const res = await this.con(sql);
-    //     return res;
-    // } 
+    public static async deleteById(id:number){
+        const sql = `DELETE FROM comments WHERE id = ${id}`;
+        const res = await this.con(sql);
+        return res;
+    } 
 
     public static validate(input:IComment){
         const schema = Joi.object({
