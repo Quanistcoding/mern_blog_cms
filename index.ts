@@ -13,6 +13,8 @@ import users from "./routes/users";
 import User from "./models/user";
 import posts from "./routes/posts";
 import Post from "./models/post";
+import comments from "./routes/comments";
+import Comment from "./models/comment";
 
 const debug = Debug("app:start");
 process.on("uncaughtException",ex=>{
@@ -35,10 +37,7 @@ app.use(express.json())
 app.use("/api/categories",categories);
 app.use("/api/users",users);
 app.use("/api/posts",posts);
-
-app.get("/api/comments",(req,res)=>{
-    res.send("");
-})
+app.use("/api/comments",comments)
 
 
 
@@ -62,6 +61,8 @@ const start = async () => {
     await Category.injectDb(con);
     await User.injectDb(con);
     await Post.injectDb(con);
+    await Comment.injectDb(con);
+
 
     const port = config.get("port") || 4000;
     const server = app.listen(port,()=>{debug("Server listening on port " + port)});

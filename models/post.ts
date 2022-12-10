@@ -1,4 +1,3 @@
-import mysql from "mysql";
 import Debug from "debug";
 import IPost from "../dtos/post";
 import Db from "./db";
@@ -19,20 +18,6 @@ export default class Post extends Db{
         return res;
     }
 
-    // interface IPost {
-    //     id?:number,
-    //     categoryId:number,
-    //     title:string | undefined,
-    //     updatedAt?:Date,
-    //     author:string | undefined,
-    //     commentCount?:number,
-    //     status:"published" | "draft",
-    //     tags:string[] | undefined,
-    //     image?:string,
-    //     content:string,
-    //     viewCount?:number
-    // }
-    
     public static async insertOne(input:IPost){
         const {categoryId,title,author,status,tags,image,content}= input as IPost;
         let sql = `INSERT INTO posts (categoryId,title,author,status,tags,image,content,date,commentCounts,viewCounts) VALUES `;

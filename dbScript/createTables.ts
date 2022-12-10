@@ -1,6 +1,8 @@
 import config from "config";
 import mysql from "mysql";
 import { EventEmitter } from 'node:events';
+import sqlCreateComments from "./createTalbeCommentsSql"
+
 const event = new EventEmitter();
 
 const db_name:string = config.get("db_name");
@@ -17,14 +19,7 @@ let sqlCreateCategories = "CREATE TABLE categories(";
     sqlCreateCategories += "name varchar(255)";
     sqlCreateCategories += ")";
 
-let sqlCreateComments = "CREATE TABLE comments(";
-    sqlCreateComments += "id int primary key auto_increment,";
-    sqlCreateComments += "postId int,";
-    sqlCreateComments += "author varchar(255),";
-    sqlCreateComments += "email varchar(255),";
-    sqlCreateComments += "content text,";
-    sqlCreateComments += "status varchar(255)";
-    sqlCreateComments += ")";
+
 
 let sqlCreatePosts = "CREATE TABLE posts(";
     sqlCreatePosts += "id int primary key auto_increment,";
@@ -60,7 +55,7 @@ function createTalbe(){
         if(index>lastIndex)return;
         console.log("creating tables...");
         con.query(sqls[index],(err,result)=>{
-            if(err)console.log(err)
+            if(err)console.log(err.message);
             console.log(sqls[index] + " done.");
             index++;
             event.emit("table created");
