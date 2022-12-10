@@ -21,7 +21,7 @@ export default class Comment extends Db{
     
     public static async insertOne(input:IComment){
         const {postId,author,email,content} = input;
-        let sql = `INSERT INTO users (postId,author,eamil,content) VALUES `;
+        let sql = `INSERT INTO comments (postId,author,email,content) VALUES `;
             sql += `("${postId}","${author}","${email}","${content}")`;
         const res = await this.con(sql);
         return res;

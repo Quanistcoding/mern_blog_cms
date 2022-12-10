@@ -96,6 +96,19 @@ describe("GET /api/comments",()=>{
             .send(comment);
             expect(res.status).toBe(400);
         })
+
+        it("should return status 201 when row is created",async ()=>{
+            const res = await request(server).post("/api/comments")
+            .send(comment);
+            expect(res.status).toBe(201);
+        })
+
+        it("should return 3 rows after a row is created",async ()=>{
+            await request(server).post("/api/comments")
+            .send(comment);
+            const res = await request(server).get("/api/comments")
+            expect(res.body.length).toBe(3);
+        })
     });
 
 

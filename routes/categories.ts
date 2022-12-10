@@ -25,7 +25,7 @@ router.post("/", async (req,res)=>{
     if(error)return res.status(400).send(error.details[0].message);
 
     const result = await Category.insertOne(req.body);
-     res.json(result);
+     res.status(201).json(result);
 })
 
 router.put("/:id",idIsNaNCheck,async (req,res)=>{
