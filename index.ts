@@ -39,6 +39,8 @@ app.use("/api/posts",posts);
 app.use(pageNotFound);
 app.use(errorHandler);
 
+
+
 const start = async () => {
     const con = mysql.createConnection({
         host:"localhost",
@@ -55,7 +57,10 @@ const start = async () => {
     await Post.injectDb(con);
 
     const port = config.get("port") || 4000;
-    app.listen(port,()=>{debug("Server listening on port " + port)});
+    const server = app.listen(port,()=>{debug("Server listening on port " + port)});
+    return server;
 }
 
-start();
+module.exports = start();
+
+

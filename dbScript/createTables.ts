@@ -60,7 +60,7 @@ function createTalbe(){
         if(index>lastIndex)return;
         console.log("creating tables...");
         con.query(sqls[index],(err,result)=>{
-            if(err)throw err;
+            if(err)console.log(err)
             console.log(sqls[index] + " done.");
             index++;
             event.emit("table created");
