@@ -51,5 +51,29 @@ describe("GET /api/comments",()=>{
                 content:"content1"
             });
         })
+
+        it("should return status 400 when id is not a number",async ()=>{
+            const res = await request(server).get("/api/comments/a");
+            expect(res.status).toBe(400);
+        })
+
+        it("should return 0 comment when row of the id is not found",async ()=>{
+            const res = await request(server).get("/api/comments/0.5");
+            expect(res.body.length).toBe(0);
+        })
     });
+
+    // describe("POSTT /api/commejnts",()=>{
+    //     it("should return status 400 when",async ()=>{
+    //         const res = await request(server).get("/api/comments/1");
+    //         expect(res.body[0]).toMatchObject({
+    //             postId:1,
+    //             author:"author1",
+    //             email:"email1",
+    //             content:"content1"
+    //         });
+    //     })
+    // });
+
+
 })
