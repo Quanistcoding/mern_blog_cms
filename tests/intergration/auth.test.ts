@@ -16,7 +16,7 @@ describe("/api/auth",()=>{
         }
     });
 
-    afterEach(async ()=>{
+    afterAll(async ()=>{
        await server.close();
        await con.end();
     });

@@ -15,6 +15,7 @@ import posts from "./routes/posts";
 import Post from "./models/post";
 import comments from "./routes/comments";
 import Comment from "./models/comment";
+import auth from "./routes/auth";
 
 const debug = Debug("app:start");
 process.on("uncaughtException",ex=>{
@@ -38,10 +39,7 @@ app.use("/api/categories",categories);
 app.use("/api/users",users);
 app.use("/api/posts",posts);
 app.use("/api/comments",comments)
-
-app.use("/api/auth",(req,res)=>{
-    res.status(400).json({a:1});
-})
+app.use("/api/auth",auth)
 
 
 app.use(pageNotFound);
