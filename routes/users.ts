@@ -3,6 +3,7 @@ import IUser from "../dtos/user";
 import User from "../models/user";
 import Debug from "debug";
 import idIsNaNCheck from "../middleware/idIsNaNCheck";
+import bcrypt from "bcrypt";
 require("express-async-errors");
 
 const debug = Debug("routes:users");
@@ -25,7 +26,7 @@ router.post("/", async (req,res)=>{
     if(error)return res.status(400).send(error.details[0].message);
 
     const result = await User.insertOne(req.body);
-     res.json(result);
+     res.status(201).json(result);
 })
 
 router.put("/:id",idIsNaNCheck,async (req,res)=>{

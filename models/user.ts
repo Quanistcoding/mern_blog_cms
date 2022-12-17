@@ -2,7 +2,7 @@ import Debug from "debug";
 import IUser from "../dtos/user";
 import Db from "./db";
 import Joi from "joi";
-
+import bcrypt from "bcrypt";
 const debug = Debug("models:user");
 
 export default class User extends Db{
@@ -20,8 +20,11 @@ export default class User extends Db{
     
     public static async insertOne(input:IUser){
         const {username,firstname,lastname,password,email} = input;
+        if(!password)return;
+        const hashed = await bcrypt.hash(password,10);
+        
         let sql = `INSERT INTO users (username,firstname,lastname,password,email) VALUES `;
-            sql += `("${username}","${firstname}","${lastname}","${password}","${email}")`;
+            sql += `("${username}","${firstname}","${lastname}","${hashed}","${email}")`;
         const res = await this.con(sql);
         return res;
     }   

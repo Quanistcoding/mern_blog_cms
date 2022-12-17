@@ -11,7 +11,7 @@ interface UserToLogin {
 router.post("/",(req,res)=>{
     const {email,password} = req.body as UserToLogin;
     if(!email)return res.status(400).send("email is required");
-    
+    if(!password)return res.status(400).send("email is required");
 });
 
 export default router;

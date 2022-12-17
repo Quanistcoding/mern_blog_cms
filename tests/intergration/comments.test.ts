@@ -1,37 +1,46 @@
-
-const request = require("supertest");
+var request = require("supertest");
 import createTableCommentsSql from "../../dbScript/createTalbeCommentsSql"
+import Comment from "../../models/comment";
 
 describe("/api/comments",()=>{
     let server:any,con:any;
     let comment:any;
 
-    beforeEach(async ()=>{
+    beforeAll(async ()=>{
         const serverObj = await require('../../index');
         server = serverObj.server;
         con = serverObj.con;
-        
+    });
+
+    beforeEach(async ()=>{
+        await con.query(createTableCommentsSql);
         comment = {
             postId:1,
             email:"aaa@bbb.com",
             content:"new comment",
             author:"new author"
         }
-
-        const dropTableSql = "DROP table comments";
-        await con.query(dropTableSql);
-        await con.query(createTableCommentsSql);
-        let insetSql = "INSERT INTO comments (postId,author,email,content) ";
-        insetSql += "VALUES (1,'author1','email1','content1'),";
-        insetSql += "(2,'author2','email2','content2')";
-        await con.query(insetSql);
+        await Comment.insertOne({
+                postId:1,
+                author:"author1",
+                email:"email1",
+                content:"content1"
+            });
+        await Comment.insertOne({
+                postId:2,
+                author:"author2",
+                email:"email2",
+                content:"content2"
+        });
     });
 
     afterEach(async ()=>{
-        await server.close();
+        const dropTableSql = "DROP table comments";
+        await con.query(dropTableSql);
     });
 
     afterAll(async ()=>{
+        await server.close();
         await con.end();
     });
 
